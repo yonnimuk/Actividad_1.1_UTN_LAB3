@@ -1,0 +1,28 @@
+use master
+CREATE database actividad1_1
+use actividad1_1
+
+CREATE TABLE Carreras(
+    ID VARCHAR(4) Primary key,
+    Nombres varchar(30) NOT NULL,
+    FechaDeCreacion DATE not NULL CHECK(FechaDeCreacion <= getdate()),
+    Mail VARCHAR(30) Not null,
+    Nivel VARCHAR(30) CHECK(Nivel='Diplomatura' or Nivel='Pregrado' or Nivel='Grado' or Nivel='Posgrado')
+)
+GO
+CREATE TABLE Alumnos(
+    Legajo BIGint not null IDENTITY(1000,1) Primary key,
+    IDcarrera VARCHAR(4) FOREIGN KEY REFERENCES Carreras(ID) NOT NULL,
+    Apellidos varchar(30) not null,
+    Nombres varchar(30) not null,
+    FechaDeNacimiento DATE not NULL CHECK(FechaDeNacimiento <= getdate()),
+    Mail VARCHAR(30) not NULL UNIQUE,
+    Telefono INT NULL
+)
+GO
+CREATE TABLE Materias(
+    ID BIGINT IDENTITY(1,1),
+    ID_carrera VARCHAR(4) NOT NULL FOREIGN KEY REFERENCES Carreras(ID),
+    Nombre VARCHAR(30) not null,
+    CargaHoraria FLOAT not NULL CHECK(CargaHoraria>=0)
+)
